@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gulnaz Kaztayeva</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F43C8'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3Ekg%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Gulnaz Kaztayeva — Mobile engineer">
+<meta property="og:description" content="iOS, Android and Flutter apps, plus bioinformatics tools.">
+<meta property="og:image" content="assets/variant-browser.png">
+<style>img{max-width:100%}</style>
+
+<meta name="description" content="Mobile engineer · iOS · Android · Flutter · bioinformatics">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F1F2EE;
+    --surface: #FFFFFF;
+    --ink: #15171C;
+    --muted: #5B616B;
+    --line: #D9DBD4;
+    --accent: #2F43C8;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #E3E6F8;
+    --nt-a: #2E9E5B; --nt-c: #2F6FD6; --nt-g: #D89A1E; --nt-t: #D2463C;
+    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0F1114; --surface: #171A1F; --ink: #E8E9E4; --muted: #9AA0A8;
+      --line: #2A2E35; --accent: #8E9CFF; --accent-ink: #0F1114; --accent-soft: #1E2340;
+      --nt-a: #4CC47E; --nt-c: #5B94F0; --nt-g: #E8B44A; --nt-t: #EE6B61;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0F1114; --surface: #171A1F; --ink: #E8E9E4; --muted: #9AA0A8;
+    --line: #2A2E35; --accent: #8E9CFF; --accent-ink: #0F1114; --accent-soft: #1E2340;
+    --nt-a: #4CC47E; --nt-c: #5B94F0; --nt-g: #E8B44A; --nt-t: #EE6B61;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 16px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+
+  /* ---------- top bar ---------- */
+  .top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+  .handle { font: 500 14px var(--mono); text-decoration: none; }
+  .handle span { color: var(--accent); }
+  .top nav { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+  .top nav a { text-decoration: none; color: var(--muted); }
+  .top nav a:hover { color: var(--ink); }
+  @media (max-width: 560px) { .top nav a:not(.keep) { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding-block: clamp(56px, 10vw, 112px) 40px; }
+  .eyebrow { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 20px; }
+  .hero h1 {
+    font: 800 clamp(44px, 8.4vw, 104px)/.95 var(--display);
+    letter-spacing: -.035em; margin: 0; text-wrap: balance;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .lede { max-width: 58ch; font-size: clamp(17px, 1.6vw, 19px); color: var(--muted); margin: 28px 0 0; text-wrap: pretty; }
+  .lede strong { color: var(--ink); font-weight: 500; }
+  .hero-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px;
+    border-radius: 999px; font: 500 15px var(--body); text-decoration: none; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); cursor: pointer; transition: border-color .15s, transform .15s;
+  }
+  .btn:hover { border-color: var(--ink); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn.primary:hover { transform: translateY(-1px); }
+  .btn[aria-disabled="true"] { color: var(--muted); background: transparent; border-style: dashed; cursor: default; }
+  .btn svg { width: 16px; height: 16px; flex: none; }
+
+  /* ---------- genome-browser track ---------- */
+  .track { margin-top: clamp(48px, 7vw, 80px); border-top: 1px solid var(--line); padding-top: 16px; }
+  .track-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 400 12px var(--mono); color: var(--muted); }
+  .track-head b { color: var(--ink); font-weight: 500; }
+  .track-scroll { overflow-x: auto; }
+  .track svg { display: block; width: 100%; min-width: 620px; height: auto; margin-top: 12px; }
+  .track .tick { stroke: var(--line); }
+  .track .tick-label { fill: var(--muted); font: 400 11px var(--mono); }
+  .track .axis { stroke: var(--ink); }
+  .track .feat { cursor: pointer; }
+  .track .feat rect { transition: opacity .15s; }
+  .track .feat:hover rect, .track .feat:focus rect { opacity: .8; }
+  .track .feat text { fill: var(--ink); font: 500 12px var(--mono); }
+  .track .feat .arrow { fill: var(--bg); }
+  .seq { display: flex; gap: 0; margin-top: 10px; font: 500 11px/1 var(--mono); overflow: hidden; white-space: nowrap; letter-spacing: .18em; user-select: none; }
+  .seq i { font-style: normal; }
+  .seq .A { color: var(--nt-a); } .seq .C { color: var(--nt-c); } .seq .G { color: var(--nt-g); } .seq .T { color: var(--nt-t); }
+
+  /* ---------- projects ---------- */
+  .section { padding-block: clamp(64px, 9vw, 112px) 0; }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+  .section h2 { font: 800 clamp(32px, 4.4vw, 52px)/1 var(--display); letter-spacing: -.03em; margin: 0; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font: 500 13px var(--body); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
+    background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .chip:hover { color: var(--ink); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .chip .n { font-family: var(--mono); font-size: 11px; opacity: .7; margin-left: 4px; }
+
+  .projects { display: grid; gap: clamp(56px, 8vw, 104px); }
+  .project {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 72px); align-items: center;
+    scroll-margin-top: 80px;
+  }
+  .project:nth-child(even) .media { order: 2; }
+  @media (max-width: 820px) {
+    .project { grid-template-columns: 1fr; }
+    .project:nth-child(even) .media { order: 0; }
+  }
+
+  .media {
+    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    padding: clamp(20px, 3vw, 36px); display: grid; place-items: center; min-height: 360px; overflow: hidden;
+  }
+  .media::before { /* faint base-pair grid */
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 16px 16px; opacity: .7;
+  }
+  .phone {
+    position: relative; width: min(230px, 70%); aspect-ratio: 400 / 830; max-width: 100%;
+    border-radius: 34px; padding: 8px; background: #111317;
+    box-shadow: 0 30px 60px -30px rgba(20, 24, 40, .45), 0 0 0 1px rgba(255,255,255,.06) inset;
+  }
+  .phone img, .phone .ph { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 27px; display: block; background: #1c1f25; }
+  .browser {
+    position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: 0 30px 60px -34px rgba(20, 24, 40, .45);
+  }
+  .browser .bar { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .browser img { display: block; width: 100%; height: auto; }
+  .ph {
+    display: grid !important; place-items: center; text-align: center; padding: 20px;
+    color: #9AA0A8; font: 400 12px/1.5 var(--mono);
+  }
+  .ph strong { display: block; font: 800 26px/1 var(--display); color: #E8E9E4; letter-spacing: -.02em; margin-bottom: 10px; }
+
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; font: 400 12px var(--mono); color: var(--muted); margin-bottom: 14px; }
+  .kind { padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+  .project h3 { font: 800 clamp(28px, 3.4vw, 40px)/1.05 var(--display); letter-spacing: -.025em; margin: 0 0 14px; text-wrap: balance; }
+  .tagline { font-size: 18px; color: var(--ink); margin: 0 0 14px; max-width: 52ch; text-wrap: pretty; }
+  .desc { color: var(--muted); margin: 0 0 20px; max-width: 60ch; }
+  .points { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 8px; max-width: 60ch; }
+  .points li { position: relative; padding-left: 22px; font-size: 15px; }
+  .points li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 10px; height: 2px; background: var(--accent); }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .stack li { font: 400 12px var(--mono); padding: 4px 9px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ---------- skills / about ---------- */
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); }
+  @media (max-width: 820px) { .about { grid-template-columns: 1fr; } }
+  .about p { color: var(--muted); max-width: 60ch; margin: 0 0 16px; }
+  .about p strong { color: var(--ink); font-weight: 500; }
+  .skills { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .skill { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .skill dt { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .skill dd { margin: 0; }
+  @media (max-width: 480px) { .skill { grid-template-columns: 1fr; gap: 4px; } }
+
+  footer { margin-top: clamp(80px, 10vw, 128px); border-top: 1px solid var(--line); padding-block: 40px 56px; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  footer h2 { font: 800 clamp(32px, 5vw, 60px)/1 var(--display); letter-spacing: -.03em; margin: 0 0 16px; }
+  footer small { font: 400 12px var(--mono); color: var(--muted); }
+</style>
+
+<style>
+  /* ---------- commercial work ---------- */
+  .work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 820px) { .work { grid-template-columns: 1fr; } }
+  .job {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; scroll-margin-top: 80px;
+  }
+  .job .meta { margin-bottom: 18px; }
+  .job h3 { font: 800 clamp(24px, 2.6vw, 30px)/1.1 var(--display); letter-spacing: -.02em; margin: 0 0 8px; text-wrap: balance; }
+  .job .company { font: 400 13px var(--mono); color: var(--muted); margin: 0 0 14px; }
+  .job .tagline { font-size: 16px; margin: 0 0 18px; }
+  .job .label { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .job .points { margin-bottom: 20px; }
+  .job .stack { margin: auto 0 0; padding-top: 4px; }
+  .job .actions { margin-top: 18px; }
+  .kind.work-k { background: var(--ink); color: var(--bg); }
+  .sub { color: var(--muted); max-width: 60ch; margin: -24px 0 36px; }
+
+  .legend { display: inline-flex; gap: 14px; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+  .email { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .email code { font: 500 clamp(16px, 2vw, 20px) var(--mono); user-select: all; word-break: break-all; }
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="handle" href="#top">~/<span>kgm1918</span></a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a class="keep" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <p class="eyebrow">Software engineer · iOS · Android · Flutter · Genomics</p>
+    <h1>From base pairs <em>to pixels.</em></h1>
+    <p class="lede">I’m Gulnaz, a mobile engineer. I build <strong>iOS apps in Swift</strong>, plus <strong>Android and Flutter</strong> apps for products used across Kazakhstan, from EV charging to taxi-driver payouts. On the side I build <strong>bioinformatics</strong> tools, from variant annotation to interfaces people enjoy using.</p>
+    <div class="hero-links">
+      <a class="btn primary" href="#work">See my work</a>
+    </div>
+
+    <div class="track" aria-label="Project timeline">
+      <div class="track-head">
+        <span><b>chr:kgm1918</b> &nbsp;project track · first to last commit</span>
+        <span class="legend">
+          <span><i style="background:var(--ink)"></i>work</span>
+          <span><i style="background:var(--accent)"></i>iOS</span>
+          <span><i style="background:var(--nt-a)"></i>bioinformatics</span>
+        </span>
+      </div>
+      <div class="track-scroll"><svg id="track" viewBox="0 0 1000 250" role="img" aria-labelledby="track-title"><title id="track-title">Timeline of projects</title></svg></div>
+      <div class="seq" id="seq" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="work">
+    <div class="section-head"><h2>Commercial work</h2></div>
+    <p class="sub">Production apps I’ve contributed to as a mobile developer. The code is private, so the cards describe the features I built.</p>
+    <div class="work" id="work-list"></div>
+  </section>
+
+  <section class="section wrap" id="projects">
+    <div class="section-head"><h2>Personal projects</h2></div>
+    <div class="projects" id="project-list"></div>
+  </section>
+
+  <section class="section wrap" id="about">
+    <div class="section-head"><h2>About</h2></div>
+    <div class="about">
+      <div>
+        <p>I trained as a <strong>software engineer</strong>. For my degree I worked on a web tool for comparing long genome sequences, and I’ve been drawn to the place where code meets biology ever since.</p>
+        <p>My day job is mobile: native iOS in Swift, Android in Kotlin and cross-platform apps in Flutter, shipped to real users. I care about clean architecture (<strong>MVVM</strong>), tested logic and tidy interfaces. In bioinformatics I care about really understanding the data (transcripts, population frequencies, ClinVar), not just the “most severe consequence”.</p>
+      </div>
+      <dl class="skills">
+        <div class="skill"><dt>iOS</dt><dd>Swift, SwiftUI, UIKit, MVVM, SnapKit, Alamofire, Swift Testing, CocoaPods</dd></div>
+        <div class="skill"><dt>Android</dt><dd>Kotlin, Jetpack Compose</dd></div>
+        <div class="skill"><dt>Cross-platform</dt><dd>Flutter, Dart, BLoC</dd></div>
+        <div class="skill"><dt>Bioinformatics</dt><dd>VCF, Ensembl VEP, gnomAD, ClinVar, Python</dd></div>
+        <div class="skill"><dt>Web &amp; data</dt><dd>React, Node.js / Express, PostgreSQL</dd></div>
+        <div class="skill"><dt>Tools</dt><dd>Xcode, Android Studio, Git, GitHub Actions, Firebase, Mixpanel, Mapbox, OpenAI API</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let’s talk.</h2>
+      <div class="email">
+        <code id="email-text">gulnazka191822@gmail.com</code>
+        <button class="btn" id="copy-email" type="button">Copy email</button>
+      </div>
+    </div>
+    <small>© 2026 · kgm1918</small>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   EDIT PROJECTS HERE
+   demo:  link to a demo (App Store / TestFlight / video / site). Empty → no button.
+   image: path to an image/GIF in assets/. Empty → placeholder.
+   ========================================================================= */
+const WORK = [
+  {
+    id: "alva",
+    name: "Alva",
+    company: "Alva Charge",
+    platforms: "iOS · Android",
+    start: "2026-04-27", updated: "2026-08-15",
+    store: "",
+    tagline: "The app for Alva Charge’s EV charging network in Kazakhstan: find a station on the map, scan its QR code to start charging, watch the session live and pay from an in-app wallet.",
+    points: [
+      "Moved the station map to Mapbox on both iOS and Android, with custom cluster pins and highlighted clusters for special stations",
+      "Notifications screen with an unread badge",
+      "Product analytics events across the key user flows",
+      "User agreement and privacy policy flow, help entry point, redesigned buttons and login redirect"
+    ],
+    stack: ["Swift", "UIKit", "SnapKit", "Kotlin", "Jetpack Compose", "Mapbox"]
+  },
+  {
+    id: "taxi-partners",
+    name: "Taxi Kolesa Partners & Top Taxi",
+    company: "Taxipark Tech",
+    platforms: "Flutter · iOS · Android",
+    start: "2026-05-26", updated: "2026-07-20",
+    store: "",
+    tagline: "A partner app for taxi drivers, released as two branded apps. Drivers track their earnings, withdraw to a card, manage their cars and take part in promotions.",
+    points: [
+      "Gifts, coupons and a personal-goals history in the promotions section",
+      "Date-range filter for transaction history and redesigned transaction statuses",
+      "Payout card slider on the withdrawal screen",
+      "Autofill and a confirmation step when adding a car"
+    ],
+    stack: ["Flutter", "Dart", "BLoC"]
+  },
+  {
+    id: "tabpay",
+    name: "TabPay",
+    company: "Taxipark Tech",
+    platforms: "Flutter · iOS · Android",
+    start: "2026-07-01", updated: "2026-07-13",
+    store: "",
+    tagline: "A cash-out app for taxi drivers: withdraw earnings to a bank card in a few taps, with the fee shown up front.",
+    points: [
+      "Self-employment registration with in-app identity verification",
+      "Closing documents and document signing confirmed by SMS code",
+      "Live balance updates on the home screen"
+    ],
+    stack: ["Flutter", "Dart", "BLoC"]
+  },
+  {
+    id: "fleety",
+    name: "Fleety",
+    company: "Fleety",
+    platforms: "Flutter · iOS · Android",
+    start: "2026-06-23", updated: "2026-07-10",
+    store: "",
+    tagline: "A fleet-management platform for taxi parks. I worked on the driver mobile app.",
+    points: [
+      "EV charging section: tariff changes, charging history and session statuses",
+      "The driver’s current position on the map",
+      "PIN-code screen and branding updates"
+    ],
+    stack: ["Flutter", "Dart"]
+  }
+];
+
+const PROJECTS = [
+  {
+    id: "variant-browser",
+    name: "Variant Annotation Browser",
+    kind: "bio",
+    frame: "browser",
+    image: "assets/variant-browser.png",
+    repo: "https://github.com/kgm1918/variant-annotation-browser",
+    demo: "",
+    start: "2026-09-20", updated: "2026-09-21",
+    stack: ["Python", "Ensembl VEP", "PostgreSQL", "Node.js", "Express", "React"],
+    tagline: "From a VCF file to a browser for rare, protein-changing variants.",
+    desc: "A pipeline annotates variants with the Ensembl VEP REST API, stores them in PostgreSQL and serves a React app with a population-frequency scale and filters.",
+    points: [
+      "Batched annotation (200 per call): per-transcript consequences, gnomAD frequencies, ClinVar significance",
+      "Shows the canonical consequence and warns when another transcript is more severe",
+      "Tells “not in gnomAD” apart from “frequency 0”",
+      "Keeps the full VEP response in JSONB so the API never has to be called twice"
+    ]
+  },
+  {
+    id: "skincare",
+    name: "SkinCare Guide",
+    kind: "ios",
+    frame: "phone",
+    image: "assets/skincare.gif",
+    repo: "https://github.com/kgm1918/SkinCareApp",
+    demo: "",
+    start: "2026-03-14", updated: "2026-09-22",
+    stack: ["Swift", "SwiftUI", "MVVM", "Swift Testing", "GitHub Actions"],
+    tagline: "A smart companion for building a skincare routine.",
+    desc: "An iOS app that uses an interactive quiz to understand your skin and put together a personal routine. The product catalogue is parsed from a local JSON file.",
+    points: [
+      "Interactive quiz with a routine recommendation based on the answers",
+      "Product catalogue parsed from local JSON",
+      "25 unit tests for the quiz logic, including parameterised ones, in Swift Testing",
+      "Tests run on every push via GitHub Actions"
+    ]
+  },
+  {
+    id: "meal-planner",
+    name: "AI Meal Planner",
+    kind: "ios",
+    frame: "phone",
+    image: "assets/mealplanner.gif",
+    repo: "https://github.com/kgm1918/MealPlannerProject",
+    demo: "",
+    start: "2026-03-01", updated: "2026-03-14",
+    stack: ["Swift", "SwiftUI", "MVVM", "OpenAI API", "Node.js", "Express", "Zod"],
+    tagline: "A personal daily or weekly menu, put together by AI.",
+    desc: "The app takes diet type, allergies and a calorie goal and turns an AI response into a clear meal plan with calories and protein for every meal.",
+    points: [
+      "Onboarding and preference setup, daily and weekly plans",
+      "A small Node.js backend keeps the OpenAI key off the device",
+      "Responses are validated against a schema and retried if invalid",
+      "Meals already planned are excluded so days don’t repeat"
+    ]
+  },
+  {
+    id: "ozinshe",
+    name: "Ozinshe",
+    kind: "ios",
+    frame: "phone",
+    image: "",
+    repo: "https://github.com/kgm1918/Ozinshe",
+    demo: "",
+    start: "2025-06-03", updated: "2025-07-08",
+    stack: ["Swift", "UIKit", "SnapKit", "Alamofire", "SDWebImage", "CocoaPods"],
+    tagline: "A client for a Kazakh streaming service.",
+    desc: "An app for watching films and series: curated home feed, category search, seasons and episodes, favourites and a profile. The interface is available in three languages.",
+    points: [
+      "Sign in, sign up and onboarding",
+      "Home feed with banners and genres, title details, seasons, episodes and a player",
+      "Category search and favourites",
+      "Localised into Kazakh, Russian and English, switchable from the profile"
+    ]
+  }
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const month = d => new Date(d + "T00:00:00").toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+const period = (a, b) => month(a) === month(b) ? month(a) : `${month(a)} – ${month(b)}`;
+
+const ICON = {
+  code: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5.5 4 1.5 8l4 4M10.5 4l4 4-4 4"/></svg>',
+  play: '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>',
+  out: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg>'
+};
+const list = xs => `<ul class="points">${xs.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+const chips = xs => `<ul class="stack">${xs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>`;
+
+$("#work-list").innerHTML = WORK.map(w => `
+  <article class="job" id="${w.id}">
+    <div class="meta"><span class="kind work-k">${esc(w.platforms)}</span><span>${esc(period(w.start, w.updated))}</span></div>
+    <h3>${esc(w.name)}</h3>
+    <p class="company">${esc(w.company)} · Mobile developer</p>
+    <p class="tagline">${esc(w.tagline)}</p>
+    <p class="label">What I built</p>
+    ${list(w.points)}
+    ${chips(w.stack)}
+    ${w.store ? `<div class="actions"><a class="btn" href="${esc(w.store)}" target="_blank" rel="noopener">${ICON.out}View in store</a></div>` : ""}
+  </article>`).join("");
+
+function mediaHTML(p) {
+  const img = p.image
+    ? `<img src="${esc(p.image)}" alt="${esc(p.name)} demo" loading="lazy">`
+    : `<div class="ph"><div><strong>${esc(p.name)}</strong>screenshots coming soon</div></div>`;
+  return p.frame === "browser"
+    ? `<div class="browser"><div class="bar"><i></i><i></i><i></i></div>${img}</div>`
+    : `<div class="phone">${img}</div>`;
+}
+
+$("#project-list").innerHTML = PROJECTS.map(p => {
+  const demo = p.demo
+    ? `<div class="actions"><a class="btn primary" href="${esc(p.demo)}" target="_blank" rel="noopener">${ICON.play}Watch demo</a></div>`
+    : "";
+  return `<article class="project" id="${p.id}">
+    <div class="media">${mediaHTML(p)}</div>
+    <div>
+      <div class="meta"><span class="kind">${p.kind === "bio" ? "Bioinformatics" : "iOS"}</span><span>${esc(period(p.start, p.updated))}</span></div>
+      <h3>${esc(p.name)}</h3>
+      <p class="tagline">${esc(p.tagline)}</p>
+      <p class="desc">${esc(p.desc)}</p>
+      ${list(p.points)}
+      ${chips(p.stack)}
+      ${demo}
+    </div>
+  </article>`;
+}).join("");
+
+/* Genome-browser style track: each project spans first → last commit */
+(function renderTrack() {
+  const start = new Date("2025-01-01"), end = new Date("2027-01-01");
+  const L = 20, R = 980;
+  const x = d => L + (R - L) * (new Date(d) - start) / (end - start);
+  const items = [
+    ...WORK.map(w => ({ ...w, color: "var(--ink)" })),
+    ...PROJECTS.map(p => ({ ...p, color: p.kind === "bio" ? "var(--nt-a)" : "var(--accent)" }))
+  ].sort((a, b) => a.start.localeCompare(b.start));
+  const H = 44 + items.length * 24;
+  const svg = $("#track");
+  svg.setAttribute("viewBox", `0 0 1000 ${H}`);
+  let out = `<line class="axis" x1="${L}" x2="${R}" y1="30" y2="30" stroke-width="1"/>`;
+  for (let y = 2025; y <= 2026; y++) for (let q = 0; q < 4; q++) {
+    const xx = x(new Date(y, q * 3, 1));
+    out += `<line class="tick" x1="${xx}" x2="${xx}" y1="${q ? 26 : 18}" y2="${H - 4}" stroke-dasharray="${q ? "2 4" : "0"}"/>`;
+    out += `<text class="tick-label" x="${xx + 4}" y="16">${q ? "Q" + (q + 1) : y}</text>`;
+  }
+  items.forEach((p, i) => {
+    const xs = x(p.start), xe = Math.max(x(p.updated), xs + 8), y = 40 + i * 24;
+    const right = xe < 700;
+    out += `<g class="feat" tabindex="0" role="link" data-target="${p.id}" aria-label="${esc(p.name)}">
+      <rect x="${xs}" y="${y}" width="${xe - xs}" height="12" rx="2" fill="${p.color}"/>
+      ${xe - xs > 40 ? [0.3, 0.6].map(f => `<path d="M${xs + (xe - xs) * f - 2} ${y + 3} l4 3 -4 3" fill="none" stroke="var(--bg)" stroke-width="1.4"/>`).join("") : ""}
+      <text x="${right ? xe + 8 : xs - 8}" y="${y + 10}" text-anchor="${right ? "start" : "end"}">${esc(p.name)}</text>
+    </g>`;
+  });
+  svg.innerHTML = `<title id="track-title">Timeline of projects</title>` + out;
+})();
+
+(function renderSeq() {
+  const bases = "ACGT"; let s = "", seed = 1918;
+  for (let i = 0; i < 240; i++) { seed = (seed * 9301 + 49297) % 233280; const b = bases[seed % 4]; s += `<i class="${b}">${b}</i>`; }
+  $("#seq").innerHTML = s;
+})();
+
+const goTo = id => document.getElementById(id)?.scrollIntoView({ block: "start" });
+document.addEventListener("click", e => {
+  const f = e.target.closest(".feat");
+  if (f) goTo(f.dataset.target);
+});
+document.addEventListener("keydown", e => {
+  const f = e.target.closest?.(".feat");
+  if (f && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); goTo(f.dataset.target); }
+});
+
+$("#copy-email").addEventListener("click", async e => {
+  const btn = e.currentTarget, text = $("#email-text").textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "Copied"; }
+  catch (_) {
+    const r = document.createRange(); r.selectNodeContents($("#email-text"));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    btn.textContent = "Selected — press ⌘C";
+  }
+  setTimeout(() => btn.textContent = "Copy email", 2000);
+});
+</script>
+
+</body>
+</html>
