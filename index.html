@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232F43C8'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3Ekg%3C/text%3E%3C/svg%3E">
 <meta property="og:title" content="Gulnaz Kaztayeva — Mobile engineer">
 <meta property="og:description" content="iOS, Android and Flutter apps, plus bioinformatics tools.">
-<meta property="og:image" content="assets/variant-browser.png">
+<meta property="og:image" content="https://kgm1918.github.io/assets/portrait.jpg">
 <style>img{max-width:100%}</style>
 
 <meta name="description" content="Mobile engineer · iOS · Android · Flutter · bioinformatics">
@@ -215,6 +215,31 @@
 
   .email { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
   .email code { font: 500 clamp(16px, 2vw, 20px) var(--mono); user-select: all; word-break: break-all; }
+
+  /* ---------- portrait + education ---------- */
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(32px, 5vw, 72px); align-items: end; }
+  .portrait {
+    margin: 0; width: clamp(220px, 25vw, 300px); aspect-ratio: 640 / 736; max-width: 100%;
+    border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: #fff;
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 820px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .portrait { order: -1; width: 148px; border-radius: 16px; }
+  }
+  .edu {
+    display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px);
+    align-items: center; margin-top: clamp(48px, 6vw, 72px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--line);
+  }
+  @media (max-width: 620px) { .edu { grid-template-columns: 1fr; } .edu figure { max-width: 280px; } }
+  .edu figure { margin: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 3 / 4; }
+  .edu figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .edu .label { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+  .edu h3 { font: 800 clamp(26px, 3vw, 36px)/1.05 var(--display); letter-spacing: -.025em; margin: 0 0 8px; }
+  .edu .where { font: 400 13px var(--mono); color: var(--muted); margin: 0 0 20px; }
+  .award { display: grid; gap: 4px; padding: 16px 18px; border-radius: 12px; background: var(--accent-soft); max-width: 52ch; }
+  .award strong { font-weight: 600; color: var(--ink); }
+  .award span { color: var(--muted); font-size: 15px; }
 </style>
 
 </head>
@@ -233,11 +258,16 @@
 
 <main id="top">
   <section class="hero wrap">
+    <div class="hero-grid">
+    <div>
     <p class="eyebrow">Software engineer · iOS · Android · Flutter · Genomics</p>
     <h1>From base pairs <em>to pixels.</em></h1>
     <p class="lede">I’m Gulnaz, a mobile engineer. I build <strong>iOS apps in Swift</strong>, plus <strong>Android and Flutter</strong> apps for products used across Kazakhstan, from EV charging to taxi-driver payouts. On the side I build <strong>bioinformatics</strong> tools, from variant annotation to interfaces people enjoy using.</p>
     <div class="hero-links">
       <a class="btn primary" href="#work">See my work</a>
+    </div>
+    </div>
+    <figure class="portrait"><img src="assets/portrait.jpg" alt="Portrait of Gulnaz Kaztayeva" width="640" height="736"></figure>
     </div>
 
     <div class="track" aria-label="Project timeline">
@@ -269,7 +299,7 @@
     <div class="section-head"><h2>About</h2></div>
     <div class="about">
       <div>
-        <p>I trained as a <strong>software engineer</strong>. For my degree I worked on a web tool for comparing long genome sequences, and I’ve been drawn to the place where code meets biology ever since.</p>
+        <p>I studied <strong>software engineering</strong> at Pusan National University in South Korea. For my degree I worked on a web tool for comparing long genome sequences, and I’ve been drawn to the place where code meets biology ever since.</p>
         <p>My day job is mobile: native iOS in Swift, Android in Kotlin and cross-platform apps in Flutter, shipped to real users. I care about clean architecture (<strong>MVVM</strong>), tested logic and tidy interfaces. In bioinformatics I care about really understanding the data (transcripts, population frequencies, ClinVar), not just the “most severe consequence”.</p>
       </div>
       <dl class="skills">
@@ -280,6 +310,19 @@
         <div class="skill"><dt>Web &amp; data</dt><dd>React, Node.js / Express, PostgreSQL</dd></div>
         <div class="skill"><dt>Tools</dt><dd>Xcode, Android Studio, Git, GitHub Actions, Firebase, Mixpanel, Mapbox, OpenAI API</dd></div>
       </dl>
+    </div>
+
+    <div class="edu">
+      <figure><img src="assets/scholarship.jpg" alt="Gulnaz holding her Samsung Dream Scholarship Foundation certificate" loading="lazy" width="1200" height="1600"></figure>
+      <div>
+        <p class="label">Education</p>
+        <h3>Pusan National University</h3>
+        <p class="where">Busan, South Korea · Mar 2020 – Aug 2023 · Undergraduate</p>
+        <div class="award">
+          <strong>Global Hope Scholar, Samsung Dream Scholarship Foundation</strong>
+          <span>Completed the whole undergraduate course as a scholarship holder. Certificate awarded June 2023.</span>
+        </div>
+      </div>
     </div>
   </section>
 </main>
