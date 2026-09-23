@@ -93,24 +93,6 @@
   .btn[aria-disabled="true"] { color: var(--muted); background: transparent; border-style: dashed; cursor: default; }
   .btn svg { width: 16px; height: 16px; flex: none; }
 
-  /* ---------- genome-browser track ---------- */
-  .track { margin-top: clamp(48px, 7vw, 80px); border-top: 1px solid var(--line); padding-top: 16px; }
-  .track-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 400 12px var(--mono); color: var(--muted); }
-  .track-head b { color: var(--ink); font-weight: 500; }
-  .track-scroll { overflow-x: auto; }
-  .track svg { display: block; width: 100%; min-width: 620px; height: auto; margin-top: 12px; }
-  .track .tick { stroke: var(--line); }
-  .track .tick-label { fill: var(--muted); font: 400 11px var(--mono); }
-  .track .axis { stroke: var(--ink); }
-  .track .feat { cursor: pointer; }
-  .track .feat rect { transition: opacity .15s; }
-  .track .feat:hover rect, .track .feat:focus rect { opacity: .8; }
-  .track .feat text { fill: var(--ink); font: 500 12px var(--mono); }
-  .track .feat .arrow { fill: var(--bg); }
-  .seq { display: flex; gap: 0; margin-top: 10px; font: 500 11px/1 var(--mono); overflow: hidden; white-space: nowrap; letter-spacing: .18em; user-select: none; }
-  .seq i { font-style: normal; }
-  .seq .A { color: var(--nt-a); } .seq .C { color: var(--nt-c); } .seq .G { color: var(--nt-g); } .seq .T { color: var(--nt-t); }
-
   /* ---------- projects ---------- */
   .section { padding-block: clamp(64px, 9vw, 112px) 0; }
   .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
@@ -210,8 +192,6 @@
   .kind.work-k { background: var(--ink); color: var(--bg); }
   .sub { color: var(--muted); max-width: 60ch; margin: -24px 0 36px; }
 
-  .legend { display: inline-flex; gap: 14px; flex-wrap: wrap; }
-  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
 
   .email { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
   .email code { font: 500 clamp(16px, 2vw, 20px) var(--mono); user-select: all; word-break: break-all; }
@@ -270,18 +250,6 @@
     <figure class="portrait"><img src="assets/portrait.jpg" alt="Portrait of Gulnaz Kaztayeva" width="640" height="736"></figure>
     </div>
 
-    <div class="track" aria-label="Project timeline">
-      <div class="track-head">
-        <span><b>chr:kgm1918</b> &nbsp;project track · first to last commit</span>
-        <span class="legend">
-          <span><i style="background:var(--ink)"></i>work</span>
-          <span><i style="background:var(--accent)"></i>iOS</span>
-          <span><i style="background:var(--nt-a)"></i>bioinformatics</span>
-        </span>
-      </div>
-      <div class="track-scroll"><svg id="track" viewBox="0 0 1000 250" role="img" aria-labelledby="track-title"><title id="track-title">Timeline of projects</title></svg></div>
-      <div class="seq" id="seq" aria-hidden="true"></div>
-    </div>
   </section>
 
   <section class="section wrap" id="work">
@@ -541,52 +509,6 @@ $("#project-list").innerHTML = PROJECTS.map(p => {
     </div>
   </article>`;
 }).join("");
-
-/* Genome-browser style track: each project spans first → last commit */
-(function renderTrack() {
-  const start = new Date("2025-01-01"), end = new Date("2027-01-01");
-  const L = 20, R = 980;
-  const x = d => L + (R - L) * (new Date(d) - start) / (end - start);
-  const items = [
-    ...WORK.map(w => ({ ...w, color: "var(--ink)" })),
-    ...PROJECTS.map(p => ({ ...p, color: p.kind === "bio" ? "var(--nt-a)" : "var(--accent)" }))
-  ].sort((a, b) => a.start.localeCompare(b.start));
-  const H = 44 + items.length * 24;
-  const svg = $("#track");
-  svg.setAttribute("viewBox", `0 0 1000 ${H}`);
-  let out = `<line class="axis" x1="${L}" x2="${R}" y1="30" y2="30" stroke-width="1"/>`;
-  for (let y = 2025; y <= 2026; y++) for (let q = 0; q < 4; q++) {
-    const xx = x(new Date(y, q * 3, 1));
-    out += `<line class="tick" x1="${xx}" x2="${xx}" y1="${q ? 26 : 18}" y2="${H - 4}" stroke-dasharray="${q ? "2 4" : "0"}"/>`;
-    out += `<text class="tick-label" x="${xx + 4}" y="16">${q ? "Q" + (q + 1) : y}</text>`;
-  }
-  items.forEach((p, i) => {
-    const xs = x(p.start), xe = Math.max(x(p.updated), xs + 8), y = 40 + i * 24;
-    const right = xe < 700;
-    out += `<g class="feat" tabindex="0" role="link" data-target="${p.id}" aria-label="${esc(p.name)}">
-      <rect x="${xs}" y="${y}" width="${xe - xs}" height="12" rx="2" fill="${p.color}"/>
-      ${xe - xs > 40 ? [0.3, 0.6].map(f => `<path d="M${xs + (xe - xs) * f - 2} ${y + 3} l4 3 -4 3" fill="none" stroke="var(--bg)" stroke-width="1.4"/>`).join("") : ""}
-      <text x="${right ? xe + 8 : xs - 8}" y="${y + 10}" text-anchor="${right ? "start" : "end"}">${esc(p.name)}</text>
-    </g>`;
-  });
-  svg.innerHTML = `<title id="track-title">Timeline of projects</title>` + out;
-})();
-
-(function renderSeq() {
-  const bases = "ACGT"; let s = "", seed = 1918;
-  for (let i = 0; i < 240; i++) { seed = (seed * 9301 + 49297) % 233280; const b = bases[seed % 4]; s += `<i class="${b}">${b}</i>`; }
-  $("#seq").innerHTML = s;
-})();
-
-const goTo = id => document.getElementById(id)?.scrollIntoView({ block: "start" });
-document.addEventListener("click", e => {
-  const f = e.target.closest(".feat");
-  if (f) goTo(f.dataset.target);
-});
-document.addEventListener("keydown", e => {
-  const f = e.target.closest?.(".feat");
-  if (f && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); goTo(f.dataset.target); }
-});
 
 $("#copy-email").addEventListener("click", async e => {
   const btn = e.currentTarget, text = $("#email-text").textContent;
